@@ -11,12 +11,14 @@
         <h1>Shopping List</h1>
         <p>Hello, ${username}</p>
         
+        <!-- Action submitted when logging out of session and erasing shopping list -->        
         <form action="" method="post">
             <a href="ShoppingList?action=logout">Logout</a>
         </form>
         
         <h2>List</h2>
-            
+        
+        <!-- Action submitted when adding items to session shopping list -->
         <form action="" method="post">
             <label>Add item: </label>
             <input type="hidden" name="action" value="add">
@@ -24,19 +26,27 @@
             <input type="submit" value="Add">
         </form>
         
-        <c:if test="${message != null}">
-            <p><i>${message}</i></p>
+        <c:if test="${addError != null}">
+            <p><i>${addError}</i></p>
         </c:if>
         
-        <c:if test="${!items.isEmpty()}">
+        <c:if test="${items != null && items.size() > 0}">
+            <!-- Action submitted when deleting items from session shopping list, only if list items present -->
+            <form action="" method="post">
+                
             <c:forEach var="item" items="${items}">
                 <input type="radio" name="shoppingItems" value="${item}">
                 <label for="${item}">${item}</label>
                 <br>
             </c:forEach>
                 
+                <input type="hidden" name="action" value="delete">
+                <input type="submit" value="Delete">
+            </form>
         </c:if>
-        
-        
+            
+        <c:if test="${deleteError != null}">
+            <p><i>${deleteError}</i></p>
+        </c:if>
     </body>
 </html>

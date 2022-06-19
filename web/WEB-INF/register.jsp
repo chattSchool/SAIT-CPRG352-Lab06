@@ -17,8 +17,8 @@
             <input type="submit" value="Register Name">
         </form>
         
-        <c:if test="${message != null}">
-            <p><i>${message}</i></p>
+        <c:if test="${usernameError != null}">
+            <p><i>${usernameError}</i></p>
         </c:if>
     </body>
 </html>

@@ -73,7 +73,7 @@ public class ShoppingListServlet extends HttpServlet {
                 return;
             } else {
                 String message = "Please enter a username";
-                request.setAttribute("message", message);
+                request.setAttribute("usernameError", message);
 
                 getServletContext().getRequestDispatcher("/WEB-INF/register.jsp").forward(request, response);
                 return;
@@ -89,14 +89,30 @@ public class ShoppingListServlet extends HttpServlet {
                 return;
             } else {
                 String message = "Please enter an item";
-                request.setAttribute("message", message);
+                request.setAttribute("addError", message);
                 
                 getServletContext().getRequestDispatcher("/WEB-INF/shoppingList.jsp").forward(request, response);
                 return;
             }
             
         } else if (action.equals("delete")) {
+            String itemSelected = request.getParameter("shoppingItems");
             
+            System.out.println(itemSelected);
+            
+            if(itemSelected != null) {
+                items.remove(itemSelected);
+            
+                response.sendRedirect("ShoppingList"); // to ensure post is not repeated upon page refresh
+                return;
+            } else {
+                System.out.println("should work");
+                String message = "Please select the item you wish to delete";
+                request.setAttribute("deleteError", message);
+                
+                getServletContext().getRequestDispatcher("/WEB-INF/shoppingList.jsp").forward(request, response);
+                return;
+            }
         }
     }
 }
